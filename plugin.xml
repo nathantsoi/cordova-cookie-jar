@@ -7,8 +7,12 @@
 		<clobbers target="window.plugins.cookieJar" />
 	</js-module>
 	<platform name="ios">
-		<plugins-plist key="CDVCookieJar" string="CDVCookieJar" />
-		<header-file src="src/ios/CDVCookieJar.h" />
+		<config-file target="config.xml" parent="/*">
+            <feature name="CookieJar">
+                <param name="ios-package" value="CDVCookieJar"/>
+            </feature>
+        </config-file>		
+        <header-file src="src/ios/CDVCookieJar.h" />
 		<source-file src="src/ios/CDVCookieJar.m" />
 	</platform>
 </plugin>
