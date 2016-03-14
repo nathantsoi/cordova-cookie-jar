@@ -6,7 +6,7 @@
 	<asset src="www/cordova-cookie-jar.js" target="cordova-cookie-jar" />
 	<platform name="ios">
 		<plugins-plist key="CDVCookieJar" string="CDVCookieJar" />
-		<header-file src="CDVCookieJar.h" />
-		<source-file src="CDVCookieJar.m" />
+		<header-file src="src/ios/CDVCookieJar.h" />
+		<source-file src="src/ios/CDVCookieJar.m" />
 	</platform>
 </plugin>
