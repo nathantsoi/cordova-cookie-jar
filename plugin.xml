@@ -4,7 +4,7 @@
 	version="1.0.0">
 	<name>Cordova Cookie Jar</name>
 	<js-module src="www/cordova-cookie-jar.js" name="cookieJar">
-		<clobbers target="cookieJar" />
+		<clobbers target="window.plugins.cookieJar" />
 	</js-module>
 	<platform name="ios">
 		<plugins-plist key="CDVCookieJar" string="CDVCookieJar" />
