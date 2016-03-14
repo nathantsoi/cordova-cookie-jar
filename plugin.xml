@@ -3,7 +3,9 @@
 	id="is.assembly.cordova-cookie-jar"
 	version="1.0.0">
 	<name>Cordova Cookie Jar</name>
-	<asset src="www/cordova-cookie-jar.js" target="cordova-cookie-jar" />
+	<js-module src="www/cordova-cookie-jar.js" name="cookieJar">
+		<clobbers target="cookieJar" />
+	</js-module>
 	<platform name="ios">
 		<plugins-plist key="CDVCookieJar" string="CDVCookieJar" />
 		<header-file src="src/ios/CDVCookieJar.h" />
