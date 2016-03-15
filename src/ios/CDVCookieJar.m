@@ -6,52 +6,40 @@
   // Member variables go here.
 }
 
-- (void)coolMethod:(CDVInvokedUrlCommand*)command;
+- (void) emptyCookies:(CDVInvokedUrlCommand*)cdvCommand;
+- (void) storeCookies:(CDVInvokedUrlCommand*)cdvCommand;
+- (void) restoreCookies:(CDVInvokedUrlCommand*)cdvCommand;
+
 @end
 
 @implementation CDVCookieJar
 
-- (void)coolMethod:(CDVInvokedUrlCommand*)command
+- (void) emptyCookies:(CDVInvokedUrlCommand*)cdvCommand
 {
-    CDVPluginResult* pluginResult = nil;
-    NSString* echo = [command.arguments objectAtIndex:0];
-
-    if (echo != nil && [echo length] > 0) {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:echo];
-    } else {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
-    }
-
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-}
-
-- (void) emptyCookiesForDomain:(CDVInvokedUrlCommand*)cdvCommand
-{
-    NSString *domain = (NSString*) [cdvCommand.arguments objectAtIndex:0];
+    NSString *key = @"cdvCookieJar";
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults removeObjectForKey:[NSString stringWithFormat:@"cdvCookieJar:@%@", domain]];
+    [defaults removeObjectForKey:key];
 }
 
-- (void) storeCookiesForDomain:(CDVInvokedUrlCommand*)cdvCommand
+- (void) storeCookies:(CDVInvokedUrlCommand*)cdvCommand
 {
-    NSString *domain = (NSString*) [cdvCommand.arguments objectAtIndex:0];
     NSMutableArray *cookieArray = [[NSMutableArray alloc] init];
     NSHTTPCookie *cookie;
     for (cookie in [NSHTTPCookieStorage sharedHTTPCookieStorage].cookies) {
-        if ([cookie.domain isEqualToString:domain]) {
-            [cookieArray addObject:cookie.properties];
-        }
+        [cookieArray addObject:cookie.properties];
     }
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:[NSArray arrayWithArray:cookieArray] forKey:[NSString stringWithFormat:@"cdvCookieJar:@%@", domain]];
+    NSString *key = @"cdvCookieJar";
+    [defaults setObject:[NSArray arrayWithArray:cookieArray] forKey:key];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-- (void) restoreCookiesForDomain:(CDVInvokedUrlCommand*)cdvCommand
+- (void) restoreCookies:(CDVInvokedUrlCommand*)cdvCommand
 {
-    NSString *domain = (NSString*) [cdvCommand.arguments objectAtIndex:0];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSHTTPCookie  *cookie;
-    NSArray *cookieArray = (NSArray*)[defaults objectForKey:[NSString stringWithFormat:@"cdvCookieJar:@%@", domain]];
+    NSString *key = @"cdvCookieJar";
+    NSArray *cookieArray = (NSArray*)[defaults objectForKey:key];
     for (NSDictionary *cookieProps in cookieArray) {
         cookie = [[NSHTTPCookie alloc] initWithProperties:cookieProps];
         [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
