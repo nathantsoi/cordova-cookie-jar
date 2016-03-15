@@ -1,18 +1,18 @@
 # Cordova Cookie Jar
 
-Your Phonegap / Cordova app needs more persistent cookie based sessions.
+use plugman to rebuild!
 
-    <script src="cordova-cookie-jar/cordova-cookie-jar.js"><script>
+Your Cordova app needs more persistent cookie based sessions.
 
     <script>
 
        // ... somewhere after cookies have been created
-       plugins.cookieJar.storeCookiesForDomain("your-domain.com");
+       cordova.plugins.CDVCookieJar.storeCookiesForDomain("your-domain.com");
 
        // ... somewhere before you wish those cookies didn't disappear
-       plugins.cookieJar.restoreCookiesForDomain("your-domain.com");
+       cordova.plugins.CDVCookieJar.restoreCookiesForDomain("your-domain.com");
 
        // ... somewhere after those cookies are no good anymore
-       plugins.cookieJar.emptyCookiesForDomain("your-domain.com");
+       cordova.plugins.CDVCookieJar.emptyCookiesForDomain("your-domain.com");
 
     </script>
